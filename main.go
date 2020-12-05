@@ -4,7 +4,10 @@ import (
 	"net"
 	"os"
 
+	"grpc_using_go/book"
+
 	log "github.com/sirupsen/logrus"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -28,10 +31,24 @@ func main() {
 
 	}
 
-	_, err := net.Listen("tcp", ":"+port)
+	l, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"Error": err.Error(),
 		}).Fatal("Failed to listen")
 	}
+
+	s := book.Server{}
+
+	grpcServer := grpc.NewServer()
+
+	book.RegisterBookServiceServer(grpcServer, &s)
+
+	log.Info("gRPC server started at ", port)
+	if err := grpcServer.Serve(l); err != nil {
+		log.WithFields(log.Fields{
+			"Error": err.Error(),
+		}).Fatal("Failed to serve")
+	}
+
 }
