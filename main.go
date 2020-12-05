@@ -8,6 +8,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -41,6 +42,8 @@ func main() {
 	s := book.Server{}
 
 	grpcServer := grpc.NewServer()
+
+	reflection.Register(grpcServer)
 
 	book.RegisterBookServiceServer(grpcServer, &s)
 
