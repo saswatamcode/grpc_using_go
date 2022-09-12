@@ -16,20 +16,16 @@ func main() {
 		FullTimestamp: true,
 	})
 
-	var port string
-	var ok bool
-	port, ok = os.LookupEnv("PORT")
+	port, ok := os.LookupEnv("PORT")
 	if ok {
 		log.WithFields(log.Fields{
 			"PORT": port,
 		}).Info("PORT env var defined")
-
 	} else {
 		port = "9000"
 		log.WithFields(log.Fields{
 			"PORT": port,
-		}).Warn("PORT env var not defined. Going with default")
-
+		}).Warn("PORT env var NOT defined. Going with default")
 	}
 
 	l, err := net.Listen("tcp", ":"+port)
@@ -42,9 +38,7 @@ func main() {
 	s := book.Server{}
 
 	grpcServer := grpc.NewServer()
-
 	reflection.Register(grpcServer)
-
 	book.RegisterBookServiceServer(grpcServer, &s)
 
 	log.Info("gRPC server started at ", port)
@@ -53,5 +47,4 @@ func main() {
 			"Error": err.Error(),
 		}).Fatal("Failed to serve")
 	}
-
 }
