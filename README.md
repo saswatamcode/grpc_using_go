@@ -12,11 +12,11 @@ A simple demo of a gRPC server using Go.
 
 ## To Run
 - Clone into repo
-- Run `go get`
-- Run `go run main.go`
+- Run `make run`
 
 
 ## Test RPC using gRPCurl
 - Start gRPC server
+- Run `grpcurl -plaintext localhost:9000 list` to list all services
 - Run `grpcurl -plaintext localhost:9000 describe` to describe all services and methods
 - Run `grpcurl -d '{"name": "To Kill a Mockingbird", "isbn": 12345}' -plaintext localhost:9000 book.BookService/GetBook`
