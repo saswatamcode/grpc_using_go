@@ -1,6 +1,9 @@
 syntax = "proto3";
 package book;
 
+// protoc book.proto --go_out=. --go-grpc_out=require_unimplemented_servers=false:.
+option go_package = "./book";
+
 message Book {
     string name = 1;
     int32 isbn = 2;
