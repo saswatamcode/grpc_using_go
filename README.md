@@ -13,6 +13,7 @@ A simple demo of a gRPC server using Go.
 ## To Run
 - Clone into repo
 - Run `make run`
+- Run `make run-docker`
 
 
 ## Test RPC using gRPCurl
