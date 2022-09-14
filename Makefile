@@ -22,6 +22,10 @@ run: compile
 	go get
 	go run main.go
 
+run-docker:
+	DOCKER_BUILDKIT=1 docker build -t $(BINARY_NAME) .
+	docker run --rm -p 9000:9000 $(BINARY_NAME) || true
+
 clean:
 	rm -f $(BINARY_NAME)
 	rm -f book/book.pb.go book/book_grpc.pb.go
